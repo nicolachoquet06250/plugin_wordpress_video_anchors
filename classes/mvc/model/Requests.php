@@ -41,7 +41,7 @@ class Requests {
 	}
 
 	public function add_time_for_video(string $time, string $title, int $video_id) {
-		\dbDelta( "INSERT INTO " . $this->prefix . "video_anchor 
+		$this->wpdb->query( "INSERT INTO " . $this->prefix . "video_anchor 
 					  		SET id_video=" . $video_id . ", 
 				  				title=\"" . $title . "\",
 				  				time_h=\"". explode(':', $time)[0] ."\",
@@ -49,22 +49,21 @@ class Requests {
 				  				time_s=\"". explode(':', $time)[2] ."\";" );
 	}
 
-	public function update_time_for_video(string $time, string $title, int $video_id) {
-		\dbDelta( "UPDATE " . $this->prefix . "video_anchor 
+	public function update_time_for_video(string $time, string $title, int $anchor_id) {
+		$this->wpdb->query( "UPDATE " . $this->prefix . "video_anchor 
 							SET title=\"" . $title . "\",
 				  				time_h=\"". explode(':', $time)[0] ."\",
 				  				time_i=\"". explode(':', $time)[1] ."\",
-				  				time_s=\"". explode(':', $time)[2] ."\"; 
-							WHERE id_video=" . $video_id . ";" );
+				  				time_s=\"". explode(':', $time)[2] ."\"
+							WHERE id=".$anchor_id );
 	}
 
 	public function delete_time_for_video(int $video_id, int $time_id) {
-		\dbDelta( "DELETE FROM " . $this->prefix . "video_anchor 
-					  		WHERE id_video=" . $video_id . " AND id=". $time_id .";" );
+		$this->wpdb->query("DELETE FROM " . $this->prefix . "video_anchor WHERE id_video=" . $video_id . " AND id=". $time_id);
 	}
 
 	public function get_first_video_id() {
 		$videos = $this->get_videos();
-		return (int)$videos[count($videos) - 1]->id;
+		return (int)$videos[0]->id;
 	}
 }
