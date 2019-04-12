@@ -210,8 +210,6 @@ class Templates {
 		            window.location.reload(true);
 		        });
 		    });
-			
-			// TODO terminer le controlleur pour la partie ancres puis attaquer la partie client.
 		}
 	};
 </script>";
