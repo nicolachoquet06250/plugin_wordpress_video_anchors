@@ -220,6 +220,7 @@ class Templates {
 	}
 
 	public static function Table( $type, $table, $add = true, $update = true, $delete = true ) {
+		var_dump(self::$model->get_courses());
 		if($type === 'videos') {
 			$table_str = '<table>
 		<thead>
