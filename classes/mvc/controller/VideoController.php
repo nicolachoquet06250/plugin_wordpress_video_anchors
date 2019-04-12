@@ -37,4 +37,12 @@ class VideoController extends Controller {
 		}
 		return false;
 	}
+
+	public function is_accessible(int $id_video) {
+		return $this->model->video_is_accessible($id_video);
+	}
+
+	public function get_model() {
+		return $this->model;
+	}
 }

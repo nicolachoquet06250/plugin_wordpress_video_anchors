@@ -66,4 +66,15 @@ class Requests {
 		$videos = $this->get_videos();
 		return (int)$videos[0]->id;
 	}
+
+	public function video_is_accessible(int $id_video) {
+		dbDelta("SELECT * FROM ".$this->prefix."video WHERE id=".$id_video.";");
+		$result = $this->wpdb->last_result;
+		if($result) $result = $result[0];
+		return ($result->status_required && is_user_logged_in()) || (!$result->status_required && !is_user_logged_in());
+	}
+
+	public function get_courses() {
+		return get_posts();
+	}
 }

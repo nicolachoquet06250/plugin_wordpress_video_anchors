@@ -28,6 +28,7 @@ class Installation {
 	id int(11) NOT NULL AUTO_INCREMENT,
 	id_product int(11) NOT NULL,
 	video varchar(255),
+	status_required int(11)
 	PRIMARY KEY (`id`)
 );");
 	}

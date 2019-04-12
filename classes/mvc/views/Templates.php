@@ -13,6 +13,9 @@ class Templates {
 		3 => 'C++'
 	];
 
+	/** @var Requests $model */
+	private static $model;
+
 	public static function Admin_RegisterVideos() {
 		require_once ABSPATH . 'wp-settings.php';
 		global $wpdb;
@@ -43,6 +46,7 @@ class Templates {
 
 		$anchors_controller = new AnchorController($wpdb);
 		$videos_controller = new VideoController($wpdb);
+		self::$model = $videos_controller->get_model();
 
 		if ( $http_method === 'POST' && isset( $_POST['action'] ) ) {
 			if ( $_POST['action'] === 'add' ) {
@@ -351,6 +355,10 @@ class Templates {
 	}
 
 	public static function get_courses( $name, $selected_course = false ) {
+		if(in_array('wooCommerce', get_plugins(__DIR__.'/../../../../')) && self::$model) {
+			self::$courses = self::$model->get_courses();
+			var_dump(self::$courses);
+		}
 		if($selected_course) {
 			$selected_course = (int)$selected_course;
 		}
